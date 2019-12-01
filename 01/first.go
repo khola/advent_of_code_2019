@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
@@ -33,8 +34,11 @@ func main() {
 
 	for {
 		_, err := fmt.Fscanln(f, &i)
-		if err != nil {
+		if err == io.EOF {
 			break
+		}
+		if err != nil {
+			log.Fatal(err)
 		}
 		forModule := fuelConsumption(i)
 		totalModules += forModule
