@@ -8,12 +8,12 @@ import (
 	"strconv"
 )
 
-func fuelForModule(n int) int {
+func fuelConsumption(n int) int {
 	return n/3 - 2
 }
 
 func fuelForFuels(n int) int {
-	f := fuelForModule(n)
+	f := fuelConsumption(n)
 	if f <= 0 {
 		return n
 	}
@@ -37,7 +37,7 @@ func main() {
 
 	for scanner.Scan() {
 		i, _ := strconv.Atoi(scanner.Text())
-		forModule := fuelForModule(i)
+		forModule := fuelConsumption(i)
 		totalModules += forModule
 		totalFuels += fuelForFuels(forModule)
 	}
