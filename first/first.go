@@ -1,11 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
 func fuelConsumption(n int) int {
@@ -31,12 +29,13 @@ func main() {
 		log.Fatal("Can't open the file")
 	}
 
-	totalModules := 0
-	totalFuels := 0
-	scanner := bufio.NewScanner(f)
+	totalModules, totalFuels, i := 0, 0, 0
 
-	for scanner.Scan() {
-		i, _ := strconv.Atoi(scanner.Text())
+	for {
+		_, err := fmt.Fscanln(f, &i)
+		if err != nil {
+			break
+		}
 		forModule := fuelConsumption(i)
 		totalModules += forModule
 		totalFuels += fuelForFuels(forModule)
