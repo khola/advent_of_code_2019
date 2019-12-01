@@ -9,7 +9,7 @@ import (
 )
 
 func fuelForModule(n int) int {
-	return (n / 3) - 2
+	return n/3 - 2
 }
 
 func fuelForFuels(n int) int {
@@ -40,7 +40,6 @@ func main() {
 		forModule := fuelForModule(i)
 		totalModules += forModule
 		totalFuels += fuelForFuels(forModule)
-
 	}
 
 	fmt.Println("Fuel for modules:")
