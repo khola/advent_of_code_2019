@@ -10,16 +10,21 @@ import (
 )
 
 func computer(n []int) int {
+	l := len(n) - 1
 	for i := 0; i < len(n)-1; i += 4 {
-		switch n[i] {
-		case 99:
-			break
-		case 1:
-			n[n[i+3]] = n[n[i+1]] + n[n[i+2]]
-		case 2:
-			n[n[i+3]] = n[n[i+1]] * n[n[i+2]]
-		default:
-			log.Panic("Unknown instruction")
+		if i < l-3 && n[i+1] < l && n[i+2] < l && n[i+3] < l {
+			switch n[i] {
+			case 99:
+				break
+			case 1:
+				n[n[i+3]] = n[n[i+1]] + n[n[i+2]]
+			case 2:
+				n[n[i+3]] = n[n[i+1]] * n[n[i+2]]
+			default:
+				log.Panic("Unknown instruction")
+			}
+		} else {
+			log.Panic("Corrupted input")
 		}
 	}
 	return n[0]
