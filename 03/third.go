@@ -98,7 +98,7 @@ func main() {
 		steps := strings.Split(string(line), ",")
 		wirePoints := wire(steps)
 
-		wires = append(wires, wirePoints)git
+		wires = append(wires, wirePoints)
 	}
 	var distance, steps int
 	for i1, pW1 := range wires[0] {
