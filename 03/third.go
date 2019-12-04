@@ -22,15 +22,14 @@ type point struct {
 	y int
 }
 
-func newPoint(x int, y int) *point {
-	p := point{x, y}
-	return &p
+func (p point) EqualToAndNotZero(b point) bool {
+	return p.x == b.x && p.y == b.y && p.x != 0 && p.y != 0
 }
 
-func linePoints(start *point, operation string) []*point {
+func linePoints(start point, operation string) []point {
 	x := start.x
 	y := start.y
-	line := []*point{}
+	line := []point{}
 
 	action := operation[0:1]
 	s := string(operation[1:len(operation)])
@@ -39,19 +38,19 @@ func linePoints(start *point, operation string) []*point {
 	switch action {
 	case "D":
 		for i := 1; i <= value; i++ {
-			line = append(line, newPoint(x, y-i))
+			line = append(line, point{x, y - i})
 		}
 	case "U":
 		for i := 1; i <= value; i++ {
-			line = append(line, newPoint(x, y+i))
+			line = append(line, point{x, y + i})
 		}
 	case "L":
 		for i := 1; i <= value; i++ {
-			line = append(line, newPoint(x-i, y))
+			line = append(line, point{x - i, y})
 		}
 	case "R":
 		for i := 1; i <= value; i++ {
-			line = append(line, newPoint(x+i, y))
+			line = append(line, point{x + i, y})
 		}
 	default:
 		panic("Unknown command")
@@ -59,9 +58,9 @@ func linePoints(start *point, operation string) []*point {
 	return line
 }
 
-func wire(steps []string) []*point {
-	first := newPoint(0, 0)
-	stepPoints := []*point{}
+func wire(steps []string) []point {
+	first := point{0, 0}
+	stepPoints := []point{}
 	for _, step := range steps {
 		points := linePoints(first, step)
 		stepPoints = append(stepPoints, points...)
@@ -84,7 +83,7 @@ func main() {
 	defer file.Close()
 
 	reader := bufio.NewReader(file)
-	wires := [][]*point{}
+	wires := [][]point{}
 	for {
 		line, _, err := reader.ReadLine()
 
@@ -99,15 +98,13 @@ func main() {
 		steps := strings.Split(string(line), ",")
 		wirePoints := wire(steps)
 
-		wires = append(wires, wirePoints)
-
+		wires = append(wires, wirePoints)git
 	}
 	var distance, steps int
-
-	for i1, pointW1 := range wires[0] {
-		for i2, pointW2 := range wires[1] {
-			if pointW1.x == pointW2.x && pointW1.y == pointW2.y && pointW1.x != 0 && pointW1.y != 0 {
-				d := abs(pointW1.x) + abs(pointW2.y)
+	for i1, pW1 := range wires[0] {
+		for i2, pW2 := range wires[1] {
+			if pW1.EqualToAndNotZero(pW2) {
+				d := abs(pW1.x) + abs(pW2.y)
 				s := i1 + i2 + 2
 				if d < distance || distance == 0 {
 					distance = d
