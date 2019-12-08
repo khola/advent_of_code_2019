@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 type instruction struct {
@@ -10,32 +9,6 @@ type instruction struct {
 	m1   int
 	m2   int
 	m3   int
-}
-
-func getModedValue(mode int, index int, n []int) int {
-	if mode == 1 {
-		return n[index]
-	}
-	return n[n[index]]
-
-}
-
-func getModedIndex(mode int, index int, n []int) int {
-	if mode == 1 {
-		return index
-	}
-	return n[index]
-}
-
-func getOpCode(n int) instruction {
-	s := fmt.Sprintf("%05d", n)
-	code, _ := strconv.Atoi(s[3:])
-	m1, _ := strconv.Atoi(s[2:3])
-	m2, _ := strconv.Atoi(s[1:2])
-	m3, _ := strconv.Atoi(s[0:1])
-	return instruction{
-		code, m1, m2, m3,
-	}
 }
 
 func amplifiers(t []int, inputs []int) int {
